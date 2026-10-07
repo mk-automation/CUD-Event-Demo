@@ -1,0 +1,14 @@
+Organization Event Form Update
+
+Updated against uploaded Institute - Events.xlsx (32-column structure).
+
+Organization export order now exactly follows:
+Institution Code, Institution Name, Event_ID, Year, Department, College, Event Name, Event Name (Arabic), Event Description, Event Description (Arabic), Website, Event Main category, Event SubCategory, Event Type, HEI's role, Industry, Program codes, Venue, City, Country, Start Date, End Date, Event duration, Frequency, Targeted Audience, Audience Type, Number of Attendees, Scope, Registration, Ticket Price, Event Budget, Open_to_students.
+
+Operational behavior retained:
+- Creator CUD Email is retained for event retrieval / future SSO.
+- Event ID remains system-generated.
+- Year is derived from Start Date for export.
+- Number of Attendees is calculated after the event as QR Attendance + Manual Attendance.
+- Evidence remains an internal post-event record and is not added to the organization template export.
+- IRP dashboard, target settings, QR attendance, post-event lock and executive dashboard are retained.

@@ -1,0 +1,34 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CUD Event Attendance</title><link rel="stylesheet" href="style.css"></head><body>
+<header><div><b>CANADIAN UNIVERSITY DUBAI</b><small>CHEDS Event Attendance</small></div><span>Participant Attendance</span></header>
+<main><div class="panel"><div class="eventbox"><b id="eventName">Event Attendance</b><br><span id="eventCode"></span></div>
+<div class="flowtag"><b>Attendance:</b> Complete this form after scanning the event QR. A successful submission is recorded as QR Attendance in this demo browser.</div>
+<form id="af" class="grid">
+<label class="wide">Are you a CUD Student, Faculty, Staff or Guest?*<select id="ptype" required><option value="">Select your answer</option><option>CUD Student</option><option>CUD Faculty</option><option>CUD Staff</option><option>Guest</option></select></label>
+<label>First Name*<input id="first" required></label><label>Last Name*<input id="last" required></label>
+<label>Email<input id="email" type="email"></label><label>Phone<input id="phone"></label>
+<label id="sidwrap">Student ID*<input id="sid"></label><label id="progwrap">Program<input id="program"></label>
+<button class="primary wide">Submit Attendance</button></form>
+<div id="done" class="success center hide"><h2>✓ Attendance Recorded</h2><p>Your submission has been recorded as QR Attendance.</p></div>
+<div class="notice" style="margin-top:18px"><b>Demo note:</b> GitHub Pages is a static demo. The attendance page opens on any phone, but attendance submitted on a different device cannot update the organizer's browser dashboard because browser storage is not shared. The final XAMPP/MySQL version will update the central attendance count across devices.</div>
+</div></main>
+<script>
+const EK="cud_v10_events",AK="cud_v10_att";
+const q=new URLSearchParams(location.search);
+let id=+(q.get("event")||0), code=q.get("code")||"", name=q.get("name")||"";
+let events=JSON.parse(localStorage.getItem(EK)||"[]"), ev=events.find(x=>x.id==id);
+eventName.textContent=(ev&&ev.event_name)||name||"Event Attendance";
+eventCode.textContent=(ev&&ev.event_id)||code||("Event ID: "+id);
+function toggle(){let y=ptype.value==="CUD Student";sidwrap.style.display=y?"flex":"none";progwrap.style.display=y?"flex":"none";sid.required=y}
+ptype.onchange=toggle;toggle();
+af.onsubmit=e=>{
+ e.preventDefault();
+ let key=(sid.value||email.value||phone.value||(first.value+"|"+last.value)).trim().toLowerCase();
+ let all=JSON.parse(localStorage.getItem(AK)||"{}"), list=all[id]||[];
+ if(list.includes(key)){alert("Attendance already recorded for this participant.");return}
+ list.push(key); all[id]=list; localStorage.setItem(AK,JSON.stringify(all));
+ let a=JSON.parse(localStorage.getItem(EK)||"[]"), x=a.find(v=>v.id==id);
+ if(x){x.qr=(x.qr||0)+1;localStorage.setItem(EK,JSON.stringify(a))}
+ af.classList.add("hide");done.classList.remove("hide");
+};
+</script></body></html>

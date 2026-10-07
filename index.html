@@ -1,0 +1,255 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CUD CHEDS Event Demo</title><link rel="stylesheet" href="style.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script></head><body>
+<header><div><b>CANADIAN UNIVERSITY DUBAI</b><small>CHEDS Event Management System</small></div><span>Interactive Demo</span></header>
+<nav><button onclick="home()">Event Organizer</button><button onclick="irpLoginPage()">IRP Department</button><button onclick="location.href='executive.html'">Executive Dashboard</button></nav><main>
+<section id="home"><h1>Event Organizer</h1><p class="form-intro">Use this shared link to create an event, generate/download its attendance QR, or return later to submit post-event information.</p><div class="homecards">
+<div class="homecard"><h2>1. Create New Event</h2><p>Complete the CHEDS Pre-Event Form. The system generates an Event ID and Attendance QR.</p><button class="primary" onclick="createPage()">Create Event</button></div>
+<div class="homecard"><h2>2. Find My Event</h2><p>Use Event ID and creator CUD email to retrieve your event and complete the post-event submission.</p><button class="primary" onclick="findPage()">Find Event</button></div>
+<div class="homecard"><h2>3. Attendance QR</h2><p>Participants scan the downloaded QR to open the attendance sheet. QR attendance is counted automatically.</p><button class="secondary" onclick="findPage()">Find Event / QR</button></div></div>
+<div class="notice"><b>Post-event lock:</b> After the organizer submits Manual Attendance and Evidence, the record is locked. The organizer can view it but cannot modify or submit it again. Only IRP can edit/unlock it.</div></section>
+
+<section id="create" class="hide"><h1>Academic Community Events - Pre QR</h1><p class="form-intro">Complete the event information. Event ID and Attendance QR are generated automatically after submission.</p>
+<form id="eventForm" class="panel grid">
+<label>Creator CUD Email*<span class="field-help">Used with Event ID to retrieve this event later.</span><input name="creator_email" type="email" required placeholder="name@cud.ac.ae"></label>
+<label>Department*<input name="department" required></label><label>College*<span class="field-help">Select the college/school responsible for the event.</span><select name="school"><option>CUD</option><option>SEAST</option><option>SAID</option><option>SOM</option><option>SCCI</option><option>SHSP</option></select></label>
+<label>Event Name*<span class="field-help">Enter the official event name in English. Arabic will be generated automatically.</span><input name="event_name" id="eventNameEnglish" required autocomplete="off"></label><label>Event Name Arabic*<span class="field-help" id="arabicNameStatus">Automatically translated from English. Please review before submission.</span><input name="event_name_ar" id="eventNameArabic" dir="rtl" lang="ar" required></label>
+<label class="wide">Event Description*<span class="field-help">Enter a brief description in English (maximum 255 characters). Arabic will be generated automatically.</span><textarea name="event_description" id="eventDescriptionEnglish" maxlength="255" required></textarea></label><label class="wide">Event Description Arabic*<span class="field-help" id="arabicDescriptionStatus">Automatically translated from English. Please review before submission.</span><textarea name="event_description_ar" id="eventDescriptionArabic" maxlength="255" dir="rtl" lang="ar" required></textarea></label>
+<label>Website<input name="website" type="url" placeholder="https://"></label><label>Event Main Category*<select name="main_category"><option>AE - Academic Event</option><option>CE - Community Event</option></select></label><label>Event SubCategory*<select name="sub_category"><option>AC-Academic</option><option>RI-Research and Innovation</option><option>CE-Community Engagement and Outreach</option><option>PD-Professional Development</option><option>IN-Industry and Career Connections</option><option>HW-Health and Wellness</option></select></label>
+<label>Event Type*<select name="event_type"><option>CN-Conference</option><option>WS-Workshop</option><option>SM-Seminar</option><option>SYM-Symposium</option><option>LC-Lecture Series</option><option>CM-Competition</option></select></label><label>HEI Role*<select name="hei_role"><option>OE-Organizing an Event</option><option>HS-Hosting an Event</option><option>EP-Event Partner</option><option>SP-Event Sponsor</option></select></label>
+<label>Industry<span class="field-help">Industrial or economic sector targeted by the event.</span><input name="industry" placeholder="CHEDS industry code / sector"></label><label>Program Codes*<span class="field-help">Enter/select the relevant program code(s). For institution-wide events use the applicable all-program option.</span><select name="programs"><option>All Programs-CUD</option><option>All Programs-SEAST</option><option>All Programs-SAID</option><option>All Programs-SOM</option><option>All Programs-SCCI</option><option>All Programs-SHSP</option></select></label>
+<label>Venue*<input name="venue" required></label><label>City*<input name="city" value="Dubai" required></label><label>Country*<input name="country" value="United Arab Emirates" required></label>
+<label>Start Date*<input name="start_date" type="date" required></label><label>End Date*<input name="end_date" type="date" required></label><label>Duration Hours*<input name="duration_hours" type="number" step=".25" required></label>
+<label>Frequency*<select name="frequency"><option>One-time</option><option>Recurring</option></select></label><label>Targeted Audience*<select name="targeted_audience"><option>ST-Students/ Prospective Students/ Alumni/ Parents & Families</option><option>FS-Faculty & Staff</option><option>CG-Community & General Public</option><option>RA-Researchers and Academics</option><option>IN-Industry, Employers</option><option>OD-Official delegates and diplomats</option><option>MI-Mix audience</option></select></label>
+<label>Audience Type*<select name="audience_type"><option>Internal Events</option><option>External Events</option><option>For Both</option></select></label>
+<label>Scope*<select name="scope"><option>Local</option><option>Regional (MENA)</option><option>International</option></select></label><label>Registration*<select name="registration_required"><option>Yes</option><option>No</option></select></label>
+<label>Ticket Price*<input name="ticket_price" type="number" min="0" value="0"></label><label>Event Budget*<input name="event_budget" type="number" min="0" value="0"></label><label>Open to Students*<select name="open_to_students"><option>Yes</option><option>No</option></select></label>
+<button class="primary wide">Submit Event & Generate QR</button></form><button class="secondary" onclick="home()">← Back</button></section>
+
+<section id="created" class="hide"><div class="panel center"><h1>Event Created Successfully</h1><div class="good"><b>Save your Event ID.</b> You will need the Event ID and creator CUD email to submit post-event information later.</div><h2 id="createdName"></h2><h1 style="color:#d71920" id="createdId"></h1><span class="status status-pre">Pre-Event Submitted</span><h2>Attendance QR</h2><p>This QR opens the participant Attendance Sheet directly.</p><div class="qrbox" id="qrbox"></div><p class="field-help">QR destination: <span id="qrDest"></span></p><div class="qr-actions"><button class="primary" onclick="downloadQRPDF()">Download Attendance QR PDF</button><button class="secondary" onclick="openAtt()">Open Attendance Sheet</button><button class="secondary" onclick="home()">Done</button></div></div></section>
+
+<section id="find" class="hide"><h1>Find My Event</h1><div class="panel"><div class="searchrow"><label>Event ID<input id="findId" placeholder="CUD-EVT-2026-0001"></label><label>Creator CUD Email<input id="findEmail" type="email" placeholder="name@cud.ac.ae"></label><button class="primary" onclick="findEvent()">Find Event</button></div><p class="field-help">Both values must match the information used when the event was created.</p></div><div id="found"></div><button class="secondary" onclick="home()">← Back</button></section>
+
+<section id="attendance" class="hide"><h1>Participant Attendance Sheet</h1><div class="panel"><div class="eventbox"><b id="attName"></b><br><span id="attId"></span></div><form id="attForm" class="grid"><label class="wide">Participant Type*<select id="ptype" required><option value="">Select</option><option>CUD Student</option><option>CUD Faculty</option><option>CUD Staff</option><option>Guest</option></select></label><label>First Name*<input id="first" required></label><label>Last Name*<input id="last" required></label><label>Email<input id="email"></label><label>Phone<input id="phone"></label><label id="sidw">Student ID*<input id="sid"></label><label id="progw">Program<input id="pprogram"></label><button class="primary wide">Submit Attendance</button></form><div id="attDone" class="success center hide"><h2>✓ Attendance Recorded</h2><p>Counted under QR Attendance.</p></div></div></section>
+
+
+<section id="irpLogin" class="hide">
+  <div style="max-width:520px;margin:45px auto">
+    <div class="panel">
+      <div class="center">
+        <h1>IRP Department Login</h1>
+        <p class="form-intro">Authorized IRP users only.</p>
+      </div>
+      <form id="irpLoginForm">
+        <label>Username / Email*
+          <input id="irpUser" type="text" autocomplete="username" required placeholder="Enter IRP username">
+        </label>
+        <label>Password*
+          <input id="irpPass" type="password" autocomplete="current-password" required placeholder="Enter password">
+        </label>
+        <div id="loginError" class="notice hide" style="margin:14px 0">Invalid username or password.</div>
+        <button class="primary" style="width:100%">Login to IRP Portal</button>
+      </form>
+      <p class="field-help center" style="margin-top:15px">Demo credentials: <b>irp@cud.ac.ae</b> / <b>IRP123!</b></p>
+      <button class="secondary" style="width:100%;margin-top:8px" onclick="home()">← Back to Event Organizer</button>
+    </div>
+  </div>
+</section>
+<section id="irp" class="hide"><div class="toplinks"><button class="active">IRP Dashboard</button><button onclick="exportCHEDSExcel()">Download CHEDS Excel</button><button onclick="toggleTargetSettings()">Set Annual Targets</button><button onclick="irpLogout()">Logout</button></div><h1>IRP Department Portal</h1><div class="irpgrid"><div class="irpbox"><strong id="ievents">0</strong>Total Events</div><div class="irpbox"><strong id="iqr">0</strong>QR Attendance</div><div class="irpbox"><strong id="imanual">0</strong>Manual Attendance</div><div class="irpbox"><strong id="itotal">0</strong>Total Attendance</div></div><div class="panel filtergrid"><select id="fschool"><option value="">All Colleges</option><option>CUD</option><option>SEAST</option><option>SAID</option><option>SOM</option><option>SCCI</option><option>SHSP</option></select><input id="fdept" placeholder="Department"><input id="fprogram" placeholder="Program"><select id="fstatus"><option value="">All Statuses</option><option>Pre-Event Submitted</option><option>Post-Event Submitted & Locked</option></select><button class="primary" onclick="renderIRP()">Apply</button></div><div class="panel tablewrap"><table><thead><tr><th>Event ID</th><th>Event</th><th>College</th><th>Department</th><th>Program</th><th>QR</th><th>Manual</th><th>Total</th><th>Status</th><th>IRP Action</th></tr></thead><tbody id="irows"></tbody></table></div><div id="irpEdit"></div><div id="irpTargetSettings" class="panel hide"><h2>School Event Targets · IRP Settings</h2><p>Set separate Academic and Community Event targets. Existing IRP dashboard and exports remain unchanged.</p><div class="actions"><select id="targetYear" onchange="renderTargetSettings()"><option>2024-25</option><option>2025-26</option><option selected>2026-27</option><option>2027-28</option></select><button class="secondary" onclick="copyTargetYear()">Copy Previous Year</button><button class="primary" onclick="saveSchoolTargets()">Save Targets</button></div><div class="tablewrap"><table><thead><tr><th>School</th><th>Academic Target</th><th>Community Target</th><th>Combined Target</th><th>Academic Actual</th><th>Community Actual</th></tr></thead><tbody id="schoolTargetRows"></tbody></table></div><div class="notice" id="targetSavedMessage">Targets are stored in the browser for this demonstration.</div></div></section>
+</main><div id="toast"></div>
+<script>
+const EK="cud_v10_events",AK="cud_v10_att";let current=null;
+function seed(){if(localStorage.getItem(EK))return;localStorage.setItem(EK,JSON.stringify([{id:1,event_id:"CUD-EVT-2026-0001",creator_email:"demo@cud.ac.ae",department:"Computer Engineering",school:"SEAST",event_name:"AI Research Symposium",program_name:"BSc Computer Science",programs:"All Programs-SEAST",main_category:"AE - Academic Event",qr:12,manual:5,status:"Post-Event Submitted & Locked",evidence:["event-photo-1.jpg"],remarks:"Successful event."}]))}
+function es(){return JSON.parse(localStorage.getItem(EK)||"[]")}function save(a){localStorage.setItem(EK,JSON.stringify(a))}
+function sections(){return [...document.querySelectorAll("main>section")]}function show(id){sections().forEach(x=>x.classList.add("hide"));document.getElementById(id).classList.remove("hide");document.querySelector("body>nav").classList.toggle("hide",id==="irp");scrollTo(0,0)}
+function home(){show("home")}
+function createPage(){show("create")}
+function findPage(){show("find");found.innerHTML=""}
+function irpLoginPage(){
+  if(sessionStorage.getItem("cud_irp_demo_auth")==="1"){irp();return;}
+  show("irpLogin");document.getElementById("irpUser").focus();
+}
+function irp(){if(sessionStorage.getItem("cud_irp_demo_auth")!=="1"){irpLoginPage();return;}show("irp");renderIRP()}
+function irpLogout(){sessionStorage.removeItem("cud_irp_demo_auth");show("irpLogin");document.getElementById("irpPass").value="";}
+
+function toast(t){let x=document.getElementById("toast");x.textContent=t;x.style.display="block";setTimeout(()=>x.style.display="none",1800)}
+eventForm.onsubmit=e=>{e.preventDefault();let f=new FormData(eventForm),a=es(),obj={id:Date.now(),event_id:"CUD-EVT-2026-"+String(a.length+1).padStart(4,"0"),qr:0,manual:0,status:"Pre-Event Submitted",evidence:[],remarks:""};for(let[k,v]of f)obj[k]=v;obj.creator_email=obj.creator_email.toLowerCase();a.push(obj);save(a);current=obj.id;createdName.textContent=obj.event_name;createdId.textContent=obj.event_id;show("created");makeQR()}
+function attendanceURL(){
+ let ev=es().find(x=>x.id==current);
+ let u=new URL("attendance.html", location.href);
+ u.searchParams.set("event",current);
+ u.searchParams.set("code",ev?.event_id||"");
+ u.searchParams.set("name",ev?.event_name||"");
+ return u.href;
+}
+function makeQR(){qrbox.innerHTML="";let u=attendanceURL();document.getElementById("qrDest").textContent=u;new QRCode(qrbox,{text:u,width:250,height:250})}
+
+function downloadQRPDF(){
+  let ev=es().find(x=>x.id==current);
+  if(!ev){alert("Event not found.");return;}
+  let img=qrbox.querySelector("img"), canvas=qrbox.querySelector("canvas");
+  let qrData=img?.src || canvas?.toDataURL("image/png");
+  if(!qrData){alert("QR is not ready yet.");return;}
+  const {jsPDF}=window.jspdf;
+  const pdf=new jsPDF({orientation:"portrait",unit:"mm",format:"a4"});
+  const pageW=210;
+  pdf.setTextColor(15,35,65);
+  pdf.setFont("helvetica","bold");
+  pdf.setFontSize(19);
+  pdf.text(String(ev.event_name||"EVENT").toUpperCase(),pageW/2,22,{align:"center"});
+  pdf.setTextColor(215,25,32);
+  pdf.setFontSize(27);
+  pdf.text(ev.event_id,pageW/2,42,{align:"center"});
+  pdf.setFillColor(255,237,240);
+  pdf.roundedRect(76,49,58,10,5,5,"F");
+  pdf.setFontSize(10);
+  pdf.text("Pre-Event Submitted",pageW/2,55.5,{align:"center"});
+  pdf.setTextColor(15,35,65);
+  pdf.setFontSize(21);
+  pdf.text("Attendance QR",pageW/2,72,{align:"center"});
+  pdf.setFont("helvetica","normal");
+  pdf.setFontSize(12);
+  pdf.text("Scan this QR to open the participant Attendance Sheet directly.",pageW/2,87,{align:"center"});
+  pdf.addImage(qrData,"PNG",55,100,100,100);
+  pdf.setDrawColor(220,225,232);
+  pdf.line(30,211,180,211);
+  pdf.setFontSize(9);
+  pdf.setTextColor(90,100,115);
+  pdf.text("Canadian University Dubai - CHEDS Event Attendance",pageW/2,220,{align:"center"});
+  pdf.save(ev.event_id+"_Attendance_QR.pdf");
+}
+function downloadQR(){let img=qrbox.querySelector("img"),canvas=qrbox.querySelector("canvas"),u=img?.src||canvas?.toDataURL("image/png");if(!u)return;let a=document.createElement("a");a.href=u;a.download=(es().find(x=>x.id==current)?.event_id||"event")+"_Attendance_QR.png";a.click()}
+function openAtt(){location.href=attendanceURL()}
+function loadAtt(id){let e=es().find(x=>x.id==id);if(!e)return;current=+id;show("attendance");attName.textContent=e.event_name;attId.textContent=e.event_id;attForm.classList.remove("hide");attDone.classList.add("hide")}
+function st(){let y=ptype.value==="CUD Student";sidw.style.display=y?"flex":"none";progw.style.display=y?"flex":"none";sid.required=y}ptype.onchange=st;st();
+attForm.onsubmit=e=>{e.preventDefault();let key=(sid.value||email.value||phone.value||(first.value+"|"+last.value)).trim().toLowerCase(),all=JSON.parse(localStorage.getItem(AK)||"{}"),l=all[current]||[];if(l.includes(key)){alert("Attendance already recorded for this participant.");return}l.push(key);all[current]=l;localStorage.setItem(AK,JSON.stringify(all));let a=es(),x=a.find(v=>v.id==current);if(x){x.qr=(x.qr||0)+1;save(a)}attForm.classList.add("hide");attDone.classList.remove("hide")}
+function findEvent(){let id=findId.value.trim().toUpperCase(),em=findEmail.value.trim().toLowerCase(),e=es().find(x=>x.event_id===id&&x.creator_email===em);if(!e){found.innerHTML='<div class="notice">Event not found. Check Event ID and creator CUD email.</div>';return}current=e.id;let locked=e.status==="Post-Event Submitted & Locked";found.innerHTML=`<div class="panel"><div class="actions"><h2 style="margin-right:auto">${e.event_name}</h2><span class="status ${locked?"status-post":"status-pre"}">${e.status}</span></div><div class="detailgrid"><div class="detail"><b>Event ID</b>${e.event_id}</div><div class="detail"><b>College</b>${e.school}</div><div class="detail"><b>Department</b>${e.department}</div><div class="detail"><b>Program</b>${e.program_name||e.programs||""}</div><div class="detail"><b>QR Attendance</b>${e.qr||0}</div><div class="detail"><b>Manual Attendance</b>${e.manual||0}</div><div class="detail"><b>Total Attendance</b>${(e.qr||0)+(e.manual||0)}</div></div><br><div class="actions"><button class="primary" onclick="eventQR(${e.id})">View / Download QR</button>${locked?'<button class="secondary" disabled>Post Event Already Submitted</button>':'<button class="primary" onclick="postForm('+e.id+')">Submit Post Event</button>'}</div>${locked?'<div class="notice" style="margin-top:15px"><b>Locked:</b> Post-event information has already been submitted. You can view this event but cannot modify or submit it again. Contact IRP if a correction is required.</div>':''}</div>`}
+function eventQR(id){current=id;let e=es().find(x=>x.id==id);createdName.textContent=e.event_name;createdId.textContent=e.event_id;show("created");makeQR()}
+function postForm(id){let e=es().find(x=>x.id==id);if(e.status==="Post-Event Submitted & Locked")return;found.innerHTML+=`<div class="panel"><h2>Post-Event Submission</h2><div class="eventbox">QR Attendance: <b>${e.qr||0}</b>. Enter only attendance not captured by QR.</div><form id="pf" class="grid">
+<label>Manual Attendance*<span class="field-help">Enter only participants not captured through the QR attendance form.</span><input id="mc" type="number" min="0" value="0" required></label>
+<label>Evidence / Pictures*<span class="field-help">Upload event photographs/evidence. File names are retained in this static demo.</span><input id="evf" type="file" multiple required accept="image/*,.pdf"></label>
+<label class="wide">Post-Event Remarks<textarea id="rem" placeholder="Add any post-event remarks or notes"></textarea></label>
+<label class="wide"><input id="confirm" type="checkbox" required> I confirm the information is final. After submission I cannot edit or submit it again.</label>
+<button class="primary wide">Final Submit & Lock</button></form></div>`;document.getElementById("pf").onsubmit=x=>{x.preventDefault();let a=es(),v=a.find(z=>z.id==id);v.manual=+mc.value||0;v.evidence=[...evf.files].map(f=>f.name);v.remarks=rem.value;v.post_submitted_at=new Date().toISOString();v.status="Post-Event Submitted & Locked";save(a);findEvent();toast("Post-event submitted and locked")}}
+function filtered(){let a=es(),s=fschool.value,d=fdept.value.toLowerCase(),p=fprogram.value.toLowerCase(),st=fstatus.value;return a.filter(e=>(!s||e.school===s)&&(!d||(e.department||"").toLowerCase().includes(d))&&(!p||(e.program_name||e.programs||"").toLowerCase().includes(p))&&(!st||e.status===st))}
+function renderIRP(){let a=filtered();ievents.textContent=a.length;iqr.textContent=a.reduce((s,e)=>s+(e.qr||0),0);imanual.textContent=a.reduce((s,e)=>s+(e.manual||0),0);itotal.textContent=a.reduce((s,e)=>s+(e.qr||0)+(e.manual||0),0);irows.innerHTML=a.map(e=>`<tr><td>${e.event_id}</td><td>${e.event_name}</td><td>${e.school}</td><td>${e.department}</td><td>${e.program_name||e.programs||""}</td><td>${e.qr||0}</td><td>${e.manual||0}</td><td><b>${(e.qr||0)+(e.manual||0)}</b></td><td><span class="status ${e.status==="Post-Event Submitted & Locked"?"status-post":"status-pre"}">${e.status}</span></td><td><button onclick="editIRP(${e.id})">Edit</button></td></tr>`).join("")}
+function editIRP(id){let e=es().find(x=>x.id==id);irpEdit.innerHTML=`<div class="panel"><h2>IRP Edit / Correction</h2><div class="notice">Only IRP can modify a locked post-event record.</div><form id="ifm" class="grid"><label>Event Name<input id="ien" value="${e.event_name}"></label><label>Manual Attendance<input id="ima" type="number" min="0" value="${e.manual||0}"></label><label>Status<select id="ist"><option ${e.status==="Pre-Event Submitted"?"selected":""}>Pre-Event Submitted</option><option ${e.status==="Post-Event Submitted & Locked"?"selected":""}>Post-Event Submitted & Locked</option></select></label><label class="wide">Remarks<textarea id="irm">${e.remarks||""}</textarea></label><button class="primary wide">Save IRP Correction</button></form></div>`;document.getElementById("ifm").onsubmit=x=>{x.preventDefault();let a=es(),v=a.find(z=>z.id==id);v.event_name=ien.value;v.manual=+ima.value||0;v.status=ist.value;v.remarks=irm.value;save(a);renderIRP();irpEdit.innerHTML="";toast("IRP correction saved")}}
+
+function exportCHEDSExcel(){
+ if(typeof XLSX==="undefined"){alert("Excel export library did not load. Please check your internet connection and try again.");return;}
+ const rows=filtered();
+ const codeOnly=v=>{v=String(v??"").trim();if(!v)return "";let m=v.match(/^([A-Za-z0-9]+)(?:\s*-\s*|$)/);return m?m[1]:v};
+ const yearOf=e=>{let d=e.start_date?new Date(e.start_date+"T00:00:00"):null;return d&&!isNaN(d)?d.getFullYear():new Date().getFullYear()};
+ const total=e=>(Number(e.qr)||0)+(Number(e.manual)||0);
+
+ // Sheet 1: exact organization Events template structure (Institute - Events.xlsx)
+ const ch=[
+  "Institution Code","Institution Name","Event_ID","Year","Department","College","Event Name","Event Name (Arabic)",
+  "Event Description","Event Description (Arabic)","Website","Event Main category","Event SubCategory","Event Type","HEI's role",
+  "Industry","Program codes","Venue","City","Country","Start Date","End Date","Event duration","Frequency","Targeted Audience",
+  "Audience Type","Number of Attendees","Scope","Registration","Ticket Price","Event Budget","Open_to_students"
+ ];
+ const chData=rows.map(e=>[
+  19,"Canadian University Dubai",e.event_id||"",yearOf(e),e.department||"",e.school||"",
+  e.event_name||"",e.event_name_ar||"",e.event_description||"",e.event_description_ar||"",e.website||"",
+  codeOnly(e.main_category),codeOnly(e.sub_category),codeOnly(e.event_type),codeOnly(e.hei_role),e.industry||"",
+  e.programs||e.program_name||"",e.venue||"",e.city||"",e.country||"",e.start_date||"",e.end_date||"",
+  e.duration_hours||"",codeOnly(e.frequency),codeOnly(e.targeted_audience),codeOnly(e.audience_type),total(e),codeOnly(e.scope),
+  e.registration_required||"",e.ticket_price||0,e.event_budget||0,
+  String(e.open_to_students||"").toLowerCase()==="yes"?"Y":String(e.open_to_students||"").toLowerCase()==="no"?"N":e.open_to_students||""
+ ]);
+
+ // Sheet 2: full internal audit/export - every captured pre/post field
+ const full=[
+  "Event ID","Status","Creator CUD Email","Department","College","Event Name English","Event Name Arabic",
+  "Event Description English","Event Description Arabic","Website","Main Category","Sub Category","Event Type","HEI Role",
+  "Industry","Programs Level","Program Name","Venue","City","Country","Start Date","End Date","Duration Hours","Frequency",
+  "Audience Type","Targeted Audience","Scope","Registration Required","Ticket Price AED","Event Budget AED","Open to Students",
+  "QR Attendance","Manual Attendance","Total Attendance","Evidence Files","Post-Event Remarks","Post Submitted At"
+ ];
+ const fullData=rows.map(e=>[
+  e.event_id||"",e.status||"",e.creator_email||"",e.department||"",e.school||"",e.event_name||"",e.event_name_ar||"",
+  e.event_description||"",e.event_description_ar||"",e.website||"",e.main_category||"",e.sub_category||"",e.event_type||"",e.hei_role||"",
+  e.industry||"",e.programs||"",e.program_name||"",e.venue||"",e.city||"",e.country||"",e.start_date||"",e.end_date||"",
+  e.duration_hours||"",e.frequency||"",e.audience_type||"",e.targeted_audience||"",e.scope||"",e.registration_required||"",
+  e.ticket_price||"",e.event_budget||"",e.open_to_students||"",Number(e.qr)||0,Number(e.manual)||0,total(e),
+  Array.isArray(e.evidence)?e.evidence.join("; "):(e.evidence||""),e.remarks||"",e.post_submitted_at||""
+ ]);
+
+ const ws1=XLSX.utils.aoa_to_sheet([ch,...chData]);
+ const ws2=XLSX.utils.aoa_to_sheet([full,...fullData]);
+ ws1["!autofilter"]={ref:"A1:AF"+(chData.length+1)};
+ ws2["!autofilter"]={ref:"A1:AK"+(fullData.length+1)};
+ ws1["!cols"]=ch.map((h,i)=>({wch:Math.min(Math.max(h.length+2,[4,6,7,8,9,10,16,17,18,19,29].includes(i)?28:16),55)}));
+ ws2["!cols"]=full.map(h=>({wch:Math.min(Math.max(h.length+3,18),42)}));
+ const wb=XLSX.utils.book_new();
+ XLSX.utils.book_append_sheet(wb,ws1,"CHEDS Events");
+ XLSX.utils.book_append_sheet(wb,ws2,"Full Pre-Post Data");
+ XLSX.writeFile(wb,"CUD-Events-Full-Pre-Post-Export.xlsx");
+}
+function exportCSV(){let a=filtered(),cols=["event_id","event_name","school","department","program_name","main_category","qr","manual","status"],r=[cols.join(",")];a.forEach(e=>r.push(cols.map(k=>`"${String(e[k]??"").replaceAll('"','""')}"`).join(",")));let b=new Blob([r.join("\\n")],{type:"text/csv"}),u=URL.createObjectURL(b),x=document.createElement("a");x.href=u;x.download="CUD_CHEDS_Events.csv";x.click()}
+
+async function autoTranslate(sourceId,targetId,statusId,maxLen){
+ const source=document.getElementById(sourceId), target=document.getElementById(targetId), status=document.getElementById(statusId);
+ if(!source||!target)return;
+ const text=source.value.trim();
+ if(!text){target.value="";return;}
+ status.textContent="Translating to Arabic...";
+ try{
+  const r=await fetch("https://api.mymemory.translated.net/get?q="+encodeURIComponent(text)+"&langpair=en|ar");
+  if(!r.ok) throw new Error();
+  const d=await r.json();
+  let t=(d?.responseData?.translatedText||"").trim();
+  if(!t) throw new Error();
+  target.value=maxLen?t.slice(0,maxLen):t;
+  status.textContent="Arabic generated automatically. Please review before submission.";
+ }catch(e){
+  status.textContent="Automatic translation is unavailable. Please enter/review the Arabic text manually.";
+ }
+}
+let nameTimer,descTimer;
+document.addEventListener("input",e=>{
+ if(e.target?.id==="eventNameEnglish"){
+  clearTimeout(nameTimer); nameTimer=setTimeout(()=>autoTranslate("eventNameEnglish","eventNameArabic","arabicNameStatus"),700);
+ }
+ if(e.target?.id==="eventDescriptionEnglish"){
+  clearTimeout(descTimer); descTimer=setTimeout(()=>autoTranslate("eventDescriptionEnglish","eventDescriptionArabic","arabicDescriptionStatus",255),900);
+ }
+});
+document.addEventListener("blur",e=>{
+ if(e.target?.id==="eventNameEnglish") autoTranslate("eventNameEnglish","eventNameArabic","arabicNameStatus");
+ if(e.target?.id==="eventDescriptionEnglish") autoTranslate("eventDescriptionEnglish","eventDescriptionArabic","arabicDescriptionStatus",255);
+},true);
+document.getElementById("irpLoginForm").onsubmit=function(e){
+ e.preventDefault();
+ const u=document.getElementById("irpUser").value.trim().toLowerCase();
+ const pw=document.getElementById("irpPass").value;
+ if(u==="irp@cud.ac.ae" && pw==="IRP123!"){
+   sessionStorage.setItem("cud_irp_demo_auth","1");
+   document.getElementById("loginError").classList.add("hide");
+   irp();
+ }else{
+   document.getElementById("loginError").classList.remove("hide");
+ }
+};
+
+const CUD_TARGET_KEY="cud_exec_targets_v1",CUD_SCHOOLS=['CUD','SEAST','SAID','SOM','SCCI','SHSP'];
+function readTargets(){try{return JSON.parse(localStorage.getItem(CUD_TARGET_KEY)||'{}')}catch(e){return {}}}
+function eventAY(e){let d=e.start_date||e.startDate||e.date||'',m=String(d).match(/^(\d{4})-(\d{2})/);if(!m)return '2026-27';let y=+m[1],mo=+m[2];return mo>=9?`${y}-${String(y+1).slice(-2)}`:`${y-1}-${String(y).slice(-2)}`}
+function eventCat(e){return String(e.main_category||e.mainCategory||e.category||'').toUpperCase().startsWith('CE')?'CE':'AE'}
+function toggleTargetSettings(){if(sessionStorage.getItem('cud_irp_demo_auth')!=='1'){irpLoginPage();return}let el=document.getElementById('irpTargetSettings');el.classList.toggle('hide');if(!el.classList.contains('hide'))renderTargetSettings()}
+function renderTargetSettings(){let y=document.getElementById('targetYear').value,t=readTargets()[y]||{},a=es();document.getElementById('schoolTargetRows').innerHTML=CUD_SCHOOLS.map(sc=>{let v=t[sc]||{academic:0,community:0},ev=a.filter(e=>e.school===sc&&eventAY(e)===y),ac=ev.filter(e=>eventCat(e)==='AE').length,co=ev.filter(e=>eventCat(e)==='CE').length;return `<tr data-school="${sc}"><td><b>${sc}</b></td><td><input class="academicTarget" type="number" min="0" max="9999" value="${v.academic}" style="width:95px"></td><td><input class="communityTarget" type="number" min="0" max="9999" value="${v.community}" style="width:95px"></td><td>${+v.academic+(+v.community)}</td><td>${ac}</td><td>${co}</td></tr>`}).join('')}
+function saveSchoolTargets(){if(sessionStorage.getItem('cud_irp_demo_auth')!=='1')return;let y=document.getElementById('targetYear').value,t=readTargets(),v={};for(let row of document.querySelectorAll('#schoolTargetRows tr')){let a=Number(row.querySelector('.academicTarget').value),c=Number(row.querySelector('.communityTarget').value);if(!Number.isInteger(a)||!Number.isInteger(c)||a<0||c<0){alert('Enter non-negative whole numbers');return}v[row.dataset.school]={academic:a,community:c}}t[y]=v;localStorage.setItem(CUD_TARGET_KEY,JSON.stringify(t));renderTargetSettings();document.getElementById('targetSavedMessage').textContent='Targets saved for '+y+'. Executive Dashboard updated.'}
+function copyTargetYear(){let y=document.getElementById('targetYear').value,yrs=['2024-25','2025-26','2026-27','2027-28'],i=yrs.indexOf(y);if(i<1){alert('No previous year');return}let t=readTargets();t[y]=JSON.parse(JSON.stringify(t[yrs[i-1]]||{}));localStorage.setItem(CUD_TARGET_KEY,JSON.stringify(t));renderTargetSettings()}
+
+seed();
+let qp=new URLSearchParams(location.search);
+if(qp.get("attendance")){
+  let qid=+qp.get("attendance"), qcode=qp.get("code")||"", qname=qp.get("name")||"Event Attendance";
+  let local=es().find(x=>x.id==qid);
+  current=qid;
+  show("attendance");
+  attName.textContent=local?.event_name||qname;
+  attId.textContent=local?.event_id||qcode;
+  attForm.classList.remove("hide");
+  attDone.classList.add("hide");
+}else home();
+</script></body></html>
