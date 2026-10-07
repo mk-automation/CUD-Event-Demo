@@ -20,3 +20,18 @@ label{display:flex;flex-direction:column;gap:6px;font-weight:700}input,select,te
 #qrbox{display:flex;justify-content:center;margin:18px auto}#qrbox img,#qrbox canvas{max-width:100%;height:auto}.event-id{font-size:clamp(27px,5vw,46px);color:var(--red);font-weight:850;letter-spacing:.03em}.created-card{text-align:center}
 @media(max-width:900px){.irpgrid{grid-template-columns:repeat(2,1fr)}.filtergrid{grid-template-columns:repeat(2,1fr)}.detailgrid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:680px){main{width:min(100% - 20px,1280px);margin-top:18px}.homecards,.grid{grid-template-columns:1fr}.wide{grid-column:auto}.irpgrid,.filtergrid,.detailgrid{grid-template-columns:1fr}header>span{display:none}nav{gap:7px}nav button{flex:1 1 140px;padding:9px;font-size:13px}.panel,.homecard{padding:17px}}
+
+/* Event Organizer: keep cards 1, 2 and 3 on one row on desktop */
+.homecards{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:18px;
+  align-items:stretch;
+}
+.homecard{
+  min-width:0;
+  height:100%;
+}
+@media(max-width:900px){
+  .homecards{grid-template-columns:1fr;}
+}
