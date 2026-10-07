@@ -13,7 +13,7 @@
 <div class="notice" style="margin-top:18px"><b>Demo note:</b> GitHub Pages is a static demo. The attendance page opens on any phone, but attendance submitted on a different device cannot update the organizer's browser dashboard because browser storage is not shared. The final XAMPP/MySQL version will update the central attendance count across devices.</div>
 </div></main>
 <script>
-const EK="cud_v10_events",AK="cud_v10_att";
+const EK="cud_v15_org_events",AK="cud_v10_att";
 const q=new URLSearchParams(location.search);
 let id=+(q.get("event")||0), code=q.get("code")||"", name=q.get("name")||"";
 let events=JSON.parse(localStorage.getItem(EK)||"[]"), ev=events.find(x=>x.id==id);

@@ -1,0 +1,4 @@
+Imported 60 source records.
+Schools: {'CUD': 36, 'SEAST': 7, 'Ministry of Tolerance and Coexistence': 1, 'SAID': 12, 'SOM': 1, 'International Center of Excellence for Sustainability and Innovation': 1, 'SHSP': 1, 'GED': 1}
+Categories: {'CE - Community Event': 19, 'AE - Academic Event': 41}
+All relevant 34-column pre-event information was mapped into the demo event records. Full-name school variants were normalized for dashboard aggregation.

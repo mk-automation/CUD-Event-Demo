@@ -33,3 +33,11 @@ GitHub Pages has no shared MySQL/PHP backend. Event and target data are stored i
 A QR scanned on another phone opens the correct attendance sheet, but that phone's attendance submission cannot update the organizer's browser count centrally. The final PHP/MySQL server version will do that.
 
 Do not use this static demo as the production attendance system.
+
+
+## Real source data
+Preloaded with all 60 records from the uploaded Pre QR workbook. Imported records begin as Pre-Event Submitted with attendance 0 because the source is pre-event data.
+
+
+## Post-event integration
+Imported 30 post-event submissions. 28 unique events are now marked **Post-Event Submitted & Locked**; 32 remain **Pre-Event Submitted**. Evidence URLs are retained. Attendance bands are preserved exactly rather than converted to fabricated counts.

@@ -1,0 +1,39 @@
+Pre-event source records: 60
+Post-event submissions imported: 30
+Unique events marked Post-Event Submitted & Locked: 28
+Events remaining Pre-Event Submitted: 32
+
+Post-event attendance values are preserved exactly as reported in the source workbook (for example 20<50, 100<150, >200). They are NOT converted into invented numeric counts. QR and numeric Manual Attendance remain separate system fields.
+Evidence links from the post-event workbook are attached to the matched event records.
+
+MATCH LOG
+1. GLOBAL TOLERANCE AND HUMAN FRATERNITY CONFERENCE -> CUD-EVT-2026-0005 | Odoo Workshop
+2. Using CISCO NetAcad Platform in the Classroom -> CUD-EVT-2026-0004 | GLOBAL TOLERANCE AND HUMAN FRATERNITY CONFERENCE
+3. ENT242 Guest Mentorship Series -> CUD-EVT-2026-0044 | Faculty Workshops on Research Visibility and Citation Impact
+4. GLOBAL TOLERANCE AND HUMAN FRATERNITY CONFERENCE, themed “Human Fraternity in the Age of Artificial Intelligence” -> CUD-EVT-2026-0005 | Odoo Workshop
+5. Book Launch: An Insider's Guide to Working in International Higher Education by Prof. Christopher Hill -> CUD-EVT-2026-0002 | Prompting Essentials - Get Better Results using AI
+6. FILLING ONE'S OWN VOID -> CUD-EVT-2026-0018 | Re-Leaf & Cooling Paths: Designing for Walkability in Heat
+7. Spring 2026 Book Fair -> CUD-EVT-2026-0012 | Towards a Sustainable Built Environment: Challenges and Opportunities in the UAE
+8. Elevating Higher Education with Google AI in Education -> CUD-EVT-2026-0021 | FF&E Workshop
+9. AI Research Assistant Tool Online Training Session -> CUD-EVT-2026-0025 | AI Research Assistant Tool Online Training Session
+10. AI Research Assistant Tool Online Training Session- for Students -> CUD-EVT-2026-0026 | Mendeley Reference Management Tool Online Training Session
+11. AI Research Assistant Tool Online Training Session- for Students (Day 2) -> CUD-EVT-2026-0028 | Readytech Training for Faculty
+12. Mendeley Reference Management Tool Online Training Session -> CUD-EVT-2026-0027 | AI Research Assistant Tool Online Training Session
+13. Re-Leaf & Cooling Paths: Designing for Walkability in Heat -> CUD-EVT-2026-0019 | Digital Craftsmanship Lecture and Workshop
+14. SciVal Demo and Walkthrough Session -> CUD-EVT-2026-0035 | Lockdown Browser Training
+15. GlobalData Explorer Database Training Session -> CUD-EVT-2026-0041 | Bloomsbury Digital Resources Training Session for SAID Faculty
+16. Placemaking: Designing Cities for Life -> CUD-EVT-2026-0034 | SciVal Demo and Walkthrough Session
+17. Bloomsbury Digital Resources Training Session for SAID Faculty -> CUD-EVT-2026-0042 | MoU Signing Ceremony: Canadian University Dubai and EM Normandie Business School Dubai
+18. Digital Visibility and Its Impact on University Positioning - Online Session -> CUD-EVT-2026-0040 | GlobalData Explorer Database Training Session
+19. MoU Signing Ceremony: Canadian University Dubai and EM Normandie Business School Dubai -> CUD-EVT-2026-0043 | ENT 242 Mentorship Series-Entrepreneurial Identity
+20. Student Award Ceremony -> CUD-EVT-2026-0054 | Canada Day
+21. Student Award Ceremony -> CUD-EVT-2026-0054 | Canada Day
+22. Canada Day -> CUD-EVT-2026-0055 | New Student Orientation
+23. New Student Orientation -> CUD-EVT-2026-0056 | Club and Society Sign-up
+24. Club and Society Sign-up -> CUD-EVT-2026-0057 | Health Awareness Day
+25. Interpreting the Traditional Islamic City -> CUD-EVT-2026-0048 | Fall 2026 Book Fair
+26. Book Fair Event 2026 -> CUD-EVT-2026-0049 | Climate-Responsive Public Realm Workshop
+27. FLA-UAE AI Connect 2026 "Connecting the Future : Celebrating Our AI Journey in Library Practice -> CUD-EVT-2026-0059 | From Urban Vision to Delivery: Designing People-Centred Cities
+28. How to Find Scholarly Resources Online Session -> CUD-EVT-2026-0032 | Mendeley Reference Management Tool Online Training Session
+29. Climate-Responsive Public Realm Workshop -> CUD-EVT-2026-0050 | Transport, Mobility and Urban Legacy
+30. Transport Mobility and Urban Legacy -> CUD-EVT-2026-0051 | MIND THE GAP: English & Math Unlocked
